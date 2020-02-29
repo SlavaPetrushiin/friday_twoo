@@ -53,7 +53,6 @@ export const recoverThePassword = () => (dispatch: Dispatch, getState: () => App
     let email = getState().forgot.textEmail;
     let emailError = emailValidator(email);
     if (emailError) {
-
         apiForgot.recoverThePassword(email).then((response) => {
             dispatch(setStatusAC(FORGOT_SUCCESS, true, 'Success'));
             if (response.error) dispatch(setStatusAC(FORGOT_ERROR, true, response.message));

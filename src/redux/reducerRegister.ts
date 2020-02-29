@@ -4,6 +4,9 @@ export const SET_USER_DATA = "SET_USER_DATA"
 export const SET_ERROR = "SET_ERROR";
 export const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 export const SUCCESS_USER_ADDED = "SUCCESS_USER_ADDED";
+export const REGISTER_LOADING = "REGISTER_LOADING";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_ERROR = "REGISTER_ERROR";
 
 
 const axios = require('axios');
