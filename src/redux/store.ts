@@ -4,12 +4,14 @@ import reducerProfile from "./reducerProfile";
 import reducerForgot from "./reducerForgot";
 import reducerRegister from "./reducerRegister";
 import thunk, {ThunkMiddleware} from "redux-thunk";
+import booleanReducer from "./booleanReducer";
 
 let rootReducer = combineReducers({
     login: reducerLogin,
     profile: reducerProfile,
     forgot: reducerForgot,
-    register: reducerRegister
+    register: reducerRegister,
+    boolean: booleanReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

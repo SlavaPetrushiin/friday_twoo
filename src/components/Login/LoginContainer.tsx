@@ -1,13 +1,23 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../redux/store";
-import {setEmailAC, setPassAC, setRememberAC, setServerError} from "../../redux/ActionCreatorsLogin/ActionCreatorsLogin";
+import {
+    setEmailAC,
+    setPassAC,
+    setRememberAC,
+    setServerError
+} from "../../redux/ActionCreatorsLogin/ActionCreatorsLogin";
 import {loginTC} from "../../redux/ThunkCreators/ThunksLogin";
 import Login from "./Login";
 
 const LoginContainer = () => {
 
-    const state = useSelector((state: AppState) => state.login);
+    const state = useSelector((state: AppState) => {
+        return {
+            login: state.login,
+            status:state.boolean.booleans
+        }
+    });
 
     const dispatch = useDispatch();
 
@@ -32,8 +42,9 @@ const LoginContainer = () => {
             setError={setError}
             setPassword={setPassword}
             login={login}
+            status={state.status}
             setEmail={setEmail}
-            state={state}
+            state={state.login}
         />
     )
 };
