@@ -5,23 +5,24 @@ import {
     CHANGE_EMAIL,
     ERROR,
     ForgotActions,
-    errorCreatorAC, IS_LOADING, isLoadingAC
+    errorCreatorAC, IS_LOADING, isLoadingAC, FORGOT_LOADING, FORGOT_SUCCESS, FORGOT_ERROR
 } from "./ActionCreatorForgot/acrionCreatorForgot";
 import {emailValidator} from "../helpers/recoveryValidators/recoveryValidator";
+import {setStatusAC} from "./ActionCreatorsBoolean/ActionCreatorsBoolean";
 
 
 interface IInitialState {
     textEmail: string;
     errorMessage: string;
-    isLoading : boolean;
-    disabledBtnForgot : boolean
+    isLoading: boolean;
+    disabledBtnForgot: boolean
 }
 
 let initialState: IInitialState = {
     textEmail: 'test@email.nya',
     errorMessage: '',
-    isLoading : false,
-    disabledBtnForgot : false
+    isLoading: false,
+    disabledBtnForgot: false
 };
 
 const reducerForgot = (state: IInitialState = initialState, action: ForgotActions): IInitialState => {
@@ -48,18 +49,18 @@ const reducerForgot = (state: IInitialState = initialState, action: ForgotAction
 
 //thunk
 export const recoverThePassword = () => (dispatch: Dispatch, getState: () => AppState): void => {
+    dispatch(setStatusAC(FORGOT_LOADING, true, 'Loading...'));
     let email = getState().forgot.textEmail;
     let emailError = emailValidator(email);
-    if(emailError){
-        debugger
-        dispatch(isLoadingAC(true))
+    if (emailError) {
+
         apiForgot.recoverThePassword(email).then((response) => {
-            dispatch(isLoadingAC(false))
-            if(response.error) dispatch(errorCreatorAC(response.message));
+            dispatch(setStatusAC(FORGOT_SUCCESS, true, 'Success'));
+            if (response.error) dispatch(setStatusAC(FORGOT_ERROR, true, response.message));
         })
     } else {
         dispatch(errorCreatorAC('Not valid email!!!'))
     }
- };
+};
 
 export default reducerForgot;

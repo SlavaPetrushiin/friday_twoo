@@ -1,18 +1,23 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import {IBool} from "../../redux/booleanReducer";
 
 interface IProps {
+    status: IBool[]
     textEmail: string;
-    errorMessage: string
+    // errorMessage: string
     changeEmailCreatorAC: (value: string) => void;
     recoverThePassword: () => void;
-    isLoading : boolean;
+    // isLoading : boolean;
 }
 
 const Forgot = (props: IProps) => {
     const {textEmail} = props;
-
-    const handleChange = (event : React.FormEvent<HTMLInputElement>) => {
+    let status;
+    if (props.status.length != 0) {
+        status = props.status.find(item => item.value);
+    }
+    const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
         props.changeEmailCreatorAC(event.currentTarget.value)
     };
 
@@ -24,11 +29,7 @@ const Forgot = (props: IProps) => {
         <div>
             <h2>Forgot</h2>
             {
-                (props.isLoading) &&  <span>Loading...</span>
-            }
-            {
-
-                (props.errorMessage.length !== 0) &&  <span>{props.errorMessage}</span>
+                status && <span>{status.message}</span>
             }
             <div>
                 <input type="text" value={textEmail} onChange={handleChange}/>
