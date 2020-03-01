@@ -2,7 +2,12 @@ import React from 'react';
 import style from './Register.module.css';
 import {Redirect} from "react-router";
 import {NavLink} from 'react-router-dom';
-import {IBool} from "../../redux/booleanReducer";
+import {
+    IBool,
+    REGISTER_LOADING,
+    REGISTER_SUCCESS,
+    REGISTER_ERROR, findStatus
+} from "../../redux/booleanReducer";
 
 
 interface IProps {
@@ -45,7 +50,7 @@ class Register extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
         if (prevProps !== this.props) {
             if (this.props.status.length != 0) {
-                let status = this.props.status.find(item => item.value);
+                let status = findStatus('REGISTER', this.props.status);
                 this.setState({status: status})
             }
         }

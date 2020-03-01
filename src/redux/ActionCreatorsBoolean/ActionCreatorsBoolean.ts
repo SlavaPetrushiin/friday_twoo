@@ -1,4 +1,4 @@
-export const SET_STATUS = 'LOGIN_SET_STATUS';
+export const SET_STATUS = 'SET_STATUS';
 
 export interface IStatus {
     type: typeof SET_STATUS,

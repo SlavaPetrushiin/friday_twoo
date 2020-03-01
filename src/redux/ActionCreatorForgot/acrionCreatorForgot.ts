@@ -1,9 +1,7 @@
 export const CHANGE_EMAIL = "FORGOT/CHANGE_EMAIL";
 export const ERROR = "FORGOT/ERROR";
 export const IS_LOADING = "FORGOT/IS_LOADING";
-export const FORGOT_LOADING = 'FORGOT_LOADING';
-export const FORGOT_SUCCESS = 'FORGOT_SUCCESS';
-export const FORGOT_ERROR = 'FORGOT_ERROR';
+
 
 //interface
 interface IChangeEmail {

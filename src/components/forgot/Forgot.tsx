@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {IBool} from "../../redux/booleanReducer";
+import {findStatus, IBool} from "../../redux/booleanReducer";
 
 interface IProps {
     status: IBool[]
@@ -15,7 +15,7 @@ const Forgot = (props: IProps) => {
     const {textEmail} = props;
     let status;
     if (props.status.length != 0) {
-        status = props.status.find(item => item.value);
+        status = findStatus('FORGOT', props.status);
     }
     const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
         props.changeEmailCreatorAC(event.currentTarget.value)

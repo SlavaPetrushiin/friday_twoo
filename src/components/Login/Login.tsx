@@ -2,8 +2,8 @@ import React from "react";
 import s from './Login.module.css'
 import {NavLink, Redirect} from "react-router-dom";
 import {emailValidator, passValidator} from "../../helpers/inputValidators/loginValidators";
-import {STATUSES} from "../../redux/ActionCreatorsLogin/ActionCreatorsLogin";
-import {IBool, LOGIN_LOADING} from "../../redux/booleanReducer";
+// import {STATUSES} from "../../redux/ActionCreatorsLogin/ActionCreatorsLogin";
+import {IBool, LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_ERROR, findStatus} from "../../redux/booleanReducer";
 
 interface ILoginState {
     email: string;
@@ -29,7 +29,7 @@ const Login = (props: IProps) => {
         return <Redirect to={'/profile'}/>
     }
     if (props.status.length != 0) {
-        status = props.status.find(item => item.value);
+        status = findStatus('LOGIN', props.status);
     }
     const onClick = () => {
         let errorMail = emailValidator(props.state.email);

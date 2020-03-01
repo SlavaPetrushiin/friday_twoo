@@ -5,10 +5,11 @@ import {
     CHANGE_EMAIL,
     ERROR,
     ForgotActions,
-    errorCreatorAC, IS_LOADING, isLoadingAC, FORGOT_LOADING, FORGOT_SUCCESS, FORGOT_ERROR
+    errorCreatorAC, IS_LOADING, isLoadingAC
 } from "./ActionCreatorForgot/acrionCreatorForgot";
 import {emailValidator} from "../helpers/recoveryValidators/recoveryValidator";
 import {setStatusAC} from "./ActionCreatorsBoolean/ActionCreatorsBoolean";
+import {FORGOT_ERROR, FORGOT_LOADING, FORGOT_SUCCESS,} from "./booleanReducer";
 
 
 interface IInitialState {
@@ -54,8 +55,11 @@ export const recoverThePassword = () => (dispatch: Dispatch, getState: () => App
     let emailError = emailValidator(email);
     if (emailError) {
         apiForgot.recoverThePassword(email).then((response) => {
-            dispatch(setStatusAC(FORGOT_SUCCESS, true, 'Success'));
-            if (response.error) dispatch(setStatusAC(FORGOT_ERROR, true, response.message));
+            if (response.error) {
+                dispatch(setStatusAC(FORGOT_ERROR, true, response.message));
+            } else {
+                dispatch(setStatusAC(FORGOT_SUCCESS, true, 'Success'));
+            }
         })
     } else {
         dispatch(errorCreatorAC('Not valid email!!!'))

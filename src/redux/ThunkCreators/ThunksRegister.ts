@@ -6,8 +6,8 @@ import {
 import {IResponse} from "../../components/Register/interfaces/types";
 import {usersAPI} from "../../dal/apiRegister";
 import {setStatusAC} from "../ActionCreatorsBoolean/ActionCreatorsBoolean";
-import {FORGOT_SUCCESS} from "../ActionCreatorForgot/acrionCreatorForgot";
-import {REGISTER_ERROR, REGISTER_LOADING, REGISTER_SUCCESS} from "../reducerRegister";
+// import {FORGOT_SUCCESS} from "../ActionCreatorForgot/acrionCreatorForgot";
+import {REGISTER_LOADING, REGISTER_SUCCESS, REGISTER_ERROR} from "../booleanReducer";
 
 export const registerUserThunk = (email: string, password: string): any => {
     return async (dispatch: Dispatch) => {

@@ -1,8 +1,16 @@
 import {BooleanActions, SET_STATUS} from "./ActionCreatorsBoolean/ActionCreatorsBoolean";
 
-export const LOGIN_LOADING = 'isLoading';
-export const LOGIN_ERROR = 'isError';
-export const LOGIN_SUCCESS = 'isSuccess';
+export const LOGIN_LOADING = 'LOGIN_LOADING';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+export const REGISTER_LOADING = "REGISTER_LOADING";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_ERROR = "REGISTER_ERROR";
+
+export const FORGOT_LOADING = 'FORGOT_LOADING';
+export const FORGOT_SUCCESS = 'FORGOT_SUCCESS';
+export const FORGOT_ERROR = 'FORGOT_ERROR';
 
 export interface IBool {
     name: string,
@@ -16,6 +24,11 @@ interface IInitialState {
 
 let initialState: IInitialState = {
     booleans: []
+};
+
+export const findStatus = (param: string, booleans: IBool[]) => {
+    return booleans.find(item => item.value && item.name === `${param}_LOADING`
+        || item.name === `${param}_SUCCESS` || item.name === `${param}_ERROR`);
 };
 
 
