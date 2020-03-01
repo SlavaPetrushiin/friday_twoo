@@ -50,7 +50,6 @@ class Time extends React.Component<IProps, IState> {
         startPauseTimer:0,
         resultPauseTimer:0
 
-
     }
     startTimer = () => {
         this.setState({
@@ -103,7 +102,6 @@ class Time extends React.Component<IProps, IState> {
         }), 1);
 
     }
-
 
     render() {
         return (
