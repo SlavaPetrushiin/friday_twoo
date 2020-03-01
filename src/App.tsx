@@ -5,6 +5,7 @@ import Profile from "./components/Profile";
 import LoginContainer from "./components/Login/LoginContainer";
 import ForgotContainer from "./components/forgot/ForgotContainer";
 import RegisterContainer from "./components/Register/RegisterContainer";
+import Modals from "./components/modal/Modals";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Route path={'/profile'}><Profile/></Route>
             <Route path={'/recovery'}><ForgotContainer/></Route>
             <Route path={'/register'}><RegisterContainer/></Route>
+            <Route path={'/modals'}><Modals /></Route>
         </div>
     );
 }
