@@ -28,6 +28,7 @@ interface IState {
 }
 
 class Time extends React.Component<IProps, IState> {
+    massTimes:any = [];
     timer: any;
     resultTimer: any;
     pauseTimer: any;
@@ -68,6 +69,8 @@ class Time extends React.Component<IProps, IState> {
         }), 1);
     }
     stopTimer = () => {
+        let result:any = this.state.time-this.state.resultPauseTimer;
+        this.massTimes.push(result);
         this.setState({isOn: false, time: 0, resultTimeTimer: 0,resultPauseTimer:0, playVisible: false,buttonTitleValue: false})
         clearInterval(this.timer)
         clearInterval(this.resultTimer)
@@ -93,7 +96,12 @@ class Time extends React.Component<IProps, IState> {
 
     }
     setTimerPlay = (e: any) => {
-        this.setState({buttonTitleValue: false})
+        clearInterval(this.pauseTimer);
+        this.setState({buttonTitleValue: false, startResultTimer: Date.now() - this.state.resultTimeTimer})
+        this.resultTimer = setInterval(() => this.setState({
+            resultTimeTimer: Date.now() - this.state.startResultTimer
+        }), 1);
+
     }
 
 
@@ -122,9 +130,11 @@ class Time extends React.Component<IProps, IState> {
                             <button onClick={this.stopTimer}>Stop</button>
                             {this.state.buttonTitleValue ? <button onClick={this.setTimerPlay}>Play</button> :
                                 <button onClick={this.setTimerPause}>Pause</button>}
-
                         </div> : <button onClick={this.startTimer}>Play</button>}
                     </div>
+                    {this.massTimes.map((item:any)=>{
+                        return <div>{item}</div>
+                    })}
                 </div>
             </div>
         )
