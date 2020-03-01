@@ -14,8 +14,8 @@ interface IMapDispatchToProps {
 }
 
 interface IMapStateToProps {
-    email: string
-    isAdmin: boolean
+    email: string,
+    isAdmin: boolean,
     _id: string,
     error: string | undefined,
     success: boolean,
