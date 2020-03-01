@@ -1,3 +1,5 @@
+import {IStatus} from "../ActionCreatorsBoolean/ActionCreatorsBoolean";
+
 export const SET_EMAIL = '/login/SET_EMAIL';
 export const SET_PASS = '/login/SET_PASS';
 export const REMEMBER_ME = '/login/REMEMBER_ME';
@@ -51,17 +53,13 @@ interface IServerError {
     error: string,
 }
 
-interface ISetStatus {
-    type: typeof SET_STATUS,
-    status: string
-}
 
 export type LoginActions =
     ISetEmail
     | ISetPass
     | IRememberMe
     | ISetServerUserData
-    | ISetStatus
+    | IStatus
     | IServerError;
 
 export const setEmailAC = (email: string): ISetEmail => {
@@ -79,7 +77,4 @@ export const setServerUserData = (data: IServerData, isAuth: boolean): ISetServe
 };
 export const setServerError = (error: string): IServerError => {
     return {type: SET_SERVER_ERROR, error}
-};
-export const setStatus = (status: string): ISetStatus => {
-    return {type: SET_STATUS, status}
 };

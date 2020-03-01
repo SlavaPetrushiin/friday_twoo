@@ -5,6 +5,7 @@ import {Dispatch} from "redux";
 import {AppState} from "../../redux/store";
 import {registerUserThunk} from "../../redux/ThunkCreators/ThunksRegister";
 import {successUserAddeACAC} from "../../redux/ActionCreatorRegister/ActionCreatorRegister";
+import {IBool} from "../../redux/booleanReducer";
 
 
 interface IMapDispatchToProps {
@@ -17,17 +18,18 @@ interface IMapStateToProps {
     email: string
     isAdmin: boolean
     _id: string,
-    error: string | undefined,
-    success: boolean,
+    // error: string | undefined,
+    // success: boolean,
     isFetching: boolean
+    status:IBool[]
 }
 
 
 class RegisterContainer extends React.Component<IMapDispatchToProps & IMapStateToProps> {
     render() {
         return <Register successUserAdded={this.props.successUserAdded} isFetching={this.props.isFetching}
-                         success={this.props.success} error={this.props.error}
-                         regUser={this.props.registerUser}/>
+                         // success={this.props.success} error={this.props.error}
+                         regUser={this.props.registerUser} status={this.props.status}/>
     }
 }
 
@@ -47,8 +49,9 @@ let mapStateToProps = (state: AppState): IMapStateToProps => {
         email: state.register.email,
         isAdmin: state.register.isAdmin,
         _id: state.register._id,
-        error: state.register.error,
-        success: state.register.success,
+        status:state.boolean.booleans,
+        // error: state.register.error,
+        // success: state.register.success,
         isFetching: state.register.isFetching
     }
 }

@@ -6,8 +6,6 @@ import {
     SET_PASS,
     SET_SERVER_ERROR,
     SET_SERVER_USER_DATA,
-    SET_STATUS,
-    STATUSES
 } from "./ActionCreatorsLogin/ActionCreatorsLogin";
 
 
@@ -17,8 +15,7 @@ interface IInitialState {
     rememberMe: boolean;
     serverData: IServerData | {},
     error: string,
-    isAuth: boolean,
-    status: string
+    isAuth: boolean
 }
 
 let initialState: IInitialState = {
@@ -28,7 +25,6 @@ let initialState: IInitialState = {
     serverData: {},
     error: '',
     isAuth: false,
-    status: STATUSES.NOT_INIT
 };
 
 
@@ -67,12 +63,6 @@ const reducerLogin = (state: IInitialState = initialState, action: LoginActions)
                 ...state,
                 error: action.error,
                 isAuth: false
-            }
-        }
-        case SET_STATUS: {
-            return {
-                ...state,
-                status: action.status
             }
         }
         default:

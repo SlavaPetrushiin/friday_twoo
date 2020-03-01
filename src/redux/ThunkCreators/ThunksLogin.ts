@@ -4,10 +4,10 @@ import {
     LoginActions,
     setServerUserData,
     setServerError,
-    setStatus,
-    STATUSES
 } from "../ActionCreatorsLogin/ActionCreatorsLogin";
 import {apiLogin} from "../../dal/apiLogin";
+import {setStatusAC} from "../ActionCreatorsBoolean/ActionCreatorsBoolean";
+import {LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS} from "../booleanReducer";
 
 type Return = void;
 type ExtraArgument = {};
@@ -17,18 +17,18 @@ export const loginTC = ()
     : ThunkAction<Return, AppState, ExtraArgument, LoginActions> => (
     dispatch: ThunkDispatch<AppState, ExtraArgument, LoginActions>,
     getStore: IGetStore) => {
-    dispatch(setStatus(STATUSES.LOADING));
+    dispatch(setStatusAC(LOGIN_LOADING, true, 'Loading...'));
     let email = getStore().login.email;
     let pass = getStore().login.password;
     let rememberMe = getStore().login.rememberMe;
     apiLogin.login(email, pass, rememberMe).then(response => {
-        dispatch(setStatus(STATUSES.SUCCESS));
+        dispatch(setStatusAC(LOGIN_SUCCESS, true, 'Success'));
         setTimeout(() => {
             dispatch(setServerUserData(response, true));
-        }, 2000);
+        }, 1000);
     })
         .catch((error) => {
-            dispatch(setStatus(STATUSES.ERROR));
-            dispatch(setServerError(error.response.data.error));
+            dispatch(setStatusAC(LOGIN_ERROR, true, error.response.data.error));
+            // dispatch(setServerError(error.response.data.error));
         })
 };

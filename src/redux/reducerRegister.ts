@@ -6,6 +6,7 @@ export const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 export const SUCCESS_USER_ADDED = "SUCCESS_USER_ADDED";
 
 
+
 const axios = require('axios');
 const instance: any = axios.create({
     baseURL: "https://dry-forest-56016.herokuapp.com/auth/"
