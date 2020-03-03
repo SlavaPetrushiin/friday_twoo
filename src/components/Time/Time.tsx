@@ -3,6 +3,7 @@ import style from './Time.module.css';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import Moment from 'react-moment';
+import moment from 'moment';
 import 'moment-timezone';
 
 
@@ -18,38 +19,39 @@ interface IState {
     resultTime: any,
     playVisible: boolean,
     buttonTitleValue: boolean,
-    time: number,
+    time: any,
     isOn: boolean,
     start: number,
     resultTimeTimer: number,
     startResultTimer: number,
-    startPauseTimer:number,
-    resultPauseTimer:number
+    startPauseTimer: number,
+    resultPauseTimer: number
 }
 
 class Time extends React.Component<IProps, IState> {
-    massTimes:any = [];
+    formatStart = 'dddd hh:mm:ss';
+    formatEnd = 'hh:mm:ss';
+    now = moment();
+
+    nowResult = moment({hour: 0, minute: 0, second: 0})
+    massTimes: any = [];
     timer: any;
     resultTimer: any;
     pauseTimer: any;
     state: IState = {
         date: new Date(),
-        timeStart: '',
+        timeStart: 0,
         timeEnd: '',
         resultTime: '',
         playVisible: false,
         buttonTitleValue: false,
         isOn: false,
-
         start: 0,
         time: 0,
-
         startResultTimer: 0,
         resultTimeTimer: 0,
-
-        startPauseTimer:0,
-        resultPauseTimer:0
-
+        startPauseTimer: 0,
+        resultPauseTimer: 0
     }
     startTimer = () => {
         this.setState({
@@ -68,27 +70,41 @@ class Time extends React.Component<IProps, IState> {
         }), 1);
     }
     stopTimer = () => {
-        let result:any = this.state.time-this.state.resultPauseTimer;
+        let result: any = this.state.time - this.state.resultPauseTimer;
         this.massTimes.push(result);
-        this.setState({isOn: false, time: 0, resultTimeTimer: 0,resultPauseTimer:0, playVisible: false,buttonTitleValue: false})
+        this.setState({
+            isOn: false,
+            time: 0,
+            resultTimeTimer: 0,
+            resultPauseTimer: 0,
+            playVisible: false,
+            buttonTitleValue: false
+        })
         clearInterval(this.timer)
         clearInterval(this.resultTimer)
         clearInterval(this.pauseTimer)
     }
 
     getResultTime = () => {
-        this.setState({resultTime: this.state.timeStart.format("HH:mm:ss") - this.state.timeEnd.format("HH:mm:ss")})
+        this.setState({resultTime:this.state.timeStart-this.state.timeEnd})
     }
     changeTimeStart = (time: any) => {
-        this.setState({timeStart: time})
+        this.setState({timeStart: time.format('hh:mm:ss')})
+
     }
     changeTimeEnd = (time: any) => {
-        this.setState({timeEnd: time})
+        this.setState({timeEnd: time.format(this.formatEnd)})
+        this.getResultTime()
+
     }
 
     setTimerPause = (e: any) => {
         clearInterval(this.resultTimer);
-        this.setState({buttonTitleValue: true,startPauseTimer:Date.now() - this.state.resultPauseTimer,startResultTimer:this.state.resultTimeTimer})
+        this.setState({
+            buttonTitleValue: true,
+            startPauseTimer: Date.now() - this.state.resultPauseTimer,
+            startResultTimer: this.state.resultTimeTimer
+        })
         this.pauseTimer = setInterval(() => this.setState({
             resultPauseTimer: Date.now() - this.state.startPauseTimer
         }), 1);
@@ -110,18 +126,33 @@ class Time extends React.Component<IProps, IState> {
                     <div>time</div>
                     <div>{this.state.date.toLocaleTimeString()}</div>
                     <div><input type={"time"}/></div>
-                    <div><TimePicker onChange={this.changeTimeStart}
-                                     value={this.state.timeStart}/>---
-                        <TimePicker onChange={this.changeTimeEnd}
-                                    value={this.state.timeEnd}/>===
-                        <TimePicker onChange={this.getResultTime}
-                                    value={this.state.resultTime}/></div>
+                    <div><TimePicker
+                        showSecond={true}
+                        defaultValue={this.now}
+                        onChange={this.changeTimeStart}
+                        format={this.formatStart}
+                        inputReadOnly/>---
+                        <TimePicker
+                            showSecond={true}
+                            defaultValue={this.now}
+                            onChange={this.changeTimeEnd}
+                            format={this.formatEnd}
+                            inputReadOnly
+                        /> ===
+                        <TimePicker
+                            showSecond={true}
+                            defaultValue={this.state.resultTime}
+                            format={this.formatEnd}
+                         />
 
+                    </div>
                     <div>time tracker</div>
                     <Moment format="HH:mm:ss" interval={1000}/>
-                    <div> (start time: <Moment format="HH:mm:ss" interval={1000}/>) -(end time:<Moment format="HH:mm:ss"
-                                                                                                       interval={1000}/>)
-                        = (all time: {this.state.time}) -(pause time: {this.state.resultPauseTimer}) =(result:{this.state.resultTimeTimer} )
+                    <div> (start time: <Moment format="HH:mm:ss" interval={1000}/>) -(end time: <Moment
+                        format="HH:mm:ss"
+                        interval={1000}/>)
+                        = (all time: {this.state.time}) -(pause time: {this.state.resultPauseTimer})
+                        =(result:{this.state.resultTimeTimer} )
                     </div>
                     <div>
                         {this.state.playVisible ? <div>
@@ -130,7 +161,7 @@ class Time extends React.Component<IProps, IState> {
                                 <button onClick={this.setTimerPause}>Pause</button>}
                         </div> : <button onClick={this.startTimer}>Play</button>}
                     </div>
-                    {this.massTimes.map((item:any)=>{
+                    {this.massTimes.map((item: any) => {
                         return <div>{item}</div>
                     })}
                 </div>
