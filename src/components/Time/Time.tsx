@@ -41,6 +41,7 @@ class Time extends React.Component<IProps, IState> {
         timeStart:moment(),
         timeEnd: moment(),
         resultTime:moment().hour(0).minute(0).second(0) ,
+
         playVisible: false,
         buttonTitleValue: false,
         isOn: false,
@@ -118,10 +119,6 @@ class Time extends React.Component<IProps, IState> {
     }
 
     render() {
-     /*  let timeResult = moment().utcOffset(0);
-        timeResult.set({hour:0,minute:0,second:0,millisecond:0})
-        timeResult.toISOString()
-        timeResult.format()*/
         return (
             <div className={style.container}>
                 <div className={style.wrapper}>
