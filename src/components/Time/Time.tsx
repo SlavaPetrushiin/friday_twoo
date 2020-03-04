@@ -31,18 +31,16 @@ interface IState {
 class Time extends React.Component<IProps, IState> {
     formatStart = 'dddd hh:mm:ss';
     formatEnd = 'hh:mm:ss';
-    now = moment();
 
-    nowResult = moment({hour: 0, minute: 0, second: 0})
     massTimes: any = [];
     timer: any;
     resultTimer: any;
     pauseTimer: any;
     state: IState = {
         date: new Date(),
-        timeStart: 0,
-        timeEnd: '',
-        resultTime: '',
+        timeStart:moment(),
+        timeEnd: moment(),
+        resultTime:moment().hour(0).minute(0).second(0) ,
         playVisible: false,
         buttonTitleValue: false,
         isOn: false,
@@ -120,6 +118,10 @@ class Time extends React.Component<IProps, IState> {
     }
 
     render() {
+     /*  let timeResult = moment().utcOffset(0);
+        timeResult.set({hour:0,minute:0,second:0,millisecond:0})
+        timeResult.toISOString()
+        timeResult.format()*/
         return (
             <div className={style.container}>
                 <div className={style.wrapper}>
@@ -128,13 +130,13 @@ class Time extends React.Component<IProps, IState> {
                     <div><input type={"time"}/></div>
                     <div><TimePicker
                         showSecond={true}
-                        defaultValue={this.now}
+                        defaultValue={this.state.timeStart}
                         onChange={this.changeTimeStart}
                         format={this.formatStart}
                         inputReadOnly/>---
                         <TimePicker
                             showSecond={true}
-                            defaultValue={this.now}
+                            defaultValue={this.state.timeEnd}
                             onChange={this.changeTimeEnd}
                             format={this.formatEnd}
                             inputReadOnly
@@ -142,7 +144,6 @@ class Time extends React.Component<IProps, IState> {
                         <TimePicker
                             showSecond={true}
                             defaultValue={this.state.resultTime}
-                            format={this.formatEnd}
                          />
 
                     </div>
