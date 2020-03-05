@@ -84,18 +84,19 @@ class Time extends React.Component<IProps, IState> {
         clearInterval(this.pauseTimer)
     }
 
-    getResultTime = () => {
-        this.setState({resultTime:this.state.timeStart-this.state.timeEnd})
-    }
+
     changeTimeStart = (time: any) => {
         this.setState({timeStart: time.format('hh:mm:ss')})
 
     }
+    change = () => {
+        this.setState({resultTime:this.state.timeEnd})
+    }
     changeTimeEnd = (time: any) => {
         this.setState({timeEnd: time.format(this.formatEnd)})
-        this.getResultTime()
-
+        this.change()
     }
+    
 
     setTimerPause = (e: any) => {
         clearInterval(this.resultTimer);
@@ -119,6 +120,7 @@ class Time extends React.Component<IProps, IState> {
     }
 
     render() {
+console.log(this.state.resultTime)
         return (
             <div className={style.container}>
                 <div className={style.wrapper}>
@@ -138,11 +140,7 @@ class Time extends React.Component<IProps, IState> {
                             format={this.formatEnd}
                             inputReadOnly
                         /> ===
-                        <TimePicker
-                            showSecond={true}
-                            defaultValue={this.state.resultTime}
-                         />
-
+                        <input type="time" value={this.state.resultTime}/>
                     </div>
                     <div>time tracker</div>
                     <Moment format="HH:mm:ss" interval={1000}/>
