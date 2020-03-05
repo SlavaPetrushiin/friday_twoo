@@ -96,7 +96,7 @@ class Time extends React.Component<IProps, IState> {
         this.setState({timeEnd: time.format(this.formatEnd)})
         this.change()
     }
-    
+
 
     setTimerPause = (e: any) => {
         clearInterval(this.resultTimer);
